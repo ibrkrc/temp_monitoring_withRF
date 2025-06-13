@@ -13,9 +13,9 @@ RF24 radio(9, 10); // CE, CSN
 const byte address[] = "00001";
 
 
-struct Veriler {
-  float sicaklik;
-  float nem;
+struct Datas {
+  float tempature;
+  float humidity;
 };
 
 void setup() {
@@ -34,24 +34,24 @@ void setup() {
 
 void loop() {
   if (radio.available()) {
-    Veriler veri;
-    radio.read(&veri, sizeof(veri));
+    Datas data;
+    radio.read(&data, sizeof(data));
 
     oled.clear();
     oled.setCursor(0, 0);
     oled.print("Tempature: ");
-    oled.print(veri.sicaklik, 1);
+    oled.print(data.tempature, 1);
     oled.println(" C");
 
     oled.setCursor(0, 1);
     oled.print("Humidity: ");
-    oled.print(veri.nem, 1);
+    oled.print(data.humidity, 1);
     oled.print(" %");
 
     Serial.print("Tempature: ");
-    Serial.print(veri.sicaklik);
+    Serial.print(data.tempature);
     Serial.print(" C, Humidity: ");
-    Serial.print(veri.nem);
+    Serial.print(data.humidity);
     Serial.println(" %");
   }
 }
